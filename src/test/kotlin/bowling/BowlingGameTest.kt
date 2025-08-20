@@ -2,7 +2,6 @@ package bowling
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 
@@ -33,9 +32,23 @@ class BowlingGameTest {
     fun `one spare`() {
         rollSpare()
         game.roll(3)
-        rollMany(17,0)
+        rollMany(17, 0)
 
         assertThat(game.score()).isEqualTo(10 + 3 + 3)
+    }
+
+    @Test
+    fun `one strike`() {
+        rollStrike()
+        game.roll(3)
+        game.roll(4)
+        rollMany(16, 0)
+
+        assertThat(game.score()).isEqualTo(10 + 3 + 4 + 3 + 4)
+    }
+
+    private fun rollStrike() {
+        game.roll(10)
     }
 
     private fun rollSpare() {
